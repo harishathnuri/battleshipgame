@@ -30,7 +30,7 @@ namespace Battle.Repository
                 .Join(context.Blocks, a => a.BlockId, b => b.Id, (a, b) => new { Attack = a, Block = b })
                 .Where(ab => ab.Block.BoardId == boardId)
                 .FirstOrDefault(ab => ab.Attack.Id == id)
-                .Attack;
+                ?.Attack;
             return attack;
         }
     }

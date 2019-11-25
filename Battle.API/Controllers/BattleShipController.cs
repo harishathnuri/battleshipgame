@@ -14,6 +14,7 @@ namespace Battle.API.Controllers
     [ApiController]
     [ApiExceptionHandler]
     [TypeFilter(typeof(ValidateBoardId))]
+    [TypeFilter(typeof(ValidateBattleShipId))]
     public class BattleShipController : Controller
     {
         private readonly IBoardRepo boardRepo;

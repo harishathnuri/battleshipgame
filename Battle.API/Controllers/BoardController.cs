@@ -50,6 +50,7 @@ namespace Battle.API.Controllers
 
         [HttpGet("{id}")]
         [TypeFilter(typeof(ValidateModelState))]
+        [TypeFilter(typeof(ValidateBoardId))]
         public IActionResult ApiBoardGet(int id)
         {
             logger.LogDebug($"Start - Request for board {id}");

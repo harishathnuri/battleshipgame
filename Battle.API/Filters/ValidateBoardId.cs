@@ -19,8 +19,20 @@ namespace Battle.API.Filters
         {
             logger.LogDebug("Start - OnActionExecuting");
 
-            if (context.ActionArguments.TryGetValue("boardId", out object value)                
-                        && value is int boardId)
+            int boardId = 0;
+            var isBoardIdAvailable = context.ActionArguments.TryGetValue("boardId", out object foreignKey)
+                        && foreignKey is int;
+            if (foreignKey != null)
+            {
+                boardId = (int)foreignKey;
+            }
+            if (!isBoardIdAvailable)
+            {
+                isBoardIdAvailable = context.ActionArguments.TryGetValue("Id", out object primaryKey)
+                        && primaryKey is int;
+                boardId = (int)primaryKey;
+            }
+            if (isBoardIdAvailable)
             {
                 var badRequestResult = new BadRequestObjectResult($"Invalid board id {boardId}");
                 if (boardId <= 0)
