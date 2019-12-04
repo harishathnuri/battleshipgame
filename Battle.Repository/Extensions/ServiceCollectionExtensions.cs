@@ -11,6 +11,7 @@ namespace Battle.Repository.Extensions
             services.AddTransient<IBattleShipRepo, BattleShipRepo>();
             services.AddTransient<IBlockRepo, BlockRepo>();
             services.AddTransient<IBoardRepo, BoardRepo>();
+            services.AddTransient<IBattleShipService, BattleShipService>();
         }
     }
 }
