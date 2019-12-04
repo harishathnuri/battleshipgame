@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Battle.API.ViewModel
 {
-    public class BlockToAttack : IValidatableObject
+    public class BlockToAttackRequest : IValidatableObject
     {
         public int Number { get; set; }
 

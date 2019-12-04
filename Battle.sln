@@ -9,12 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.Repository", "Battle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.API", "Battle.API\Battle.API.csproj", "{024C7D2A-3E57-4CAF-9EFC-6AB82CEBDD47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.Tests", "Battle.Tests\Battle.Tests.csproj", "{4613BB40-21AF-41EA-B427-CB27497E01FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.Domain.Tests", "Battle.Domain.Tests\Battle.Domain.Tests.csproj", "{4613BB40-21AF-41EA-B427-CB27497E01FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{728E5836-84C9-4819-902F-7AA2A23325E2}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DD184619-EC06-41AC-9408-3B08B451155C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EAAF33FA-5B12-4E1C-87B1-51AC38E91785}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battle.API.Tests", "Battle.API.Tests\Battle.API.Tests.csproj", "{84280993-94CF-48F8-B7C2-8B3E1AD8D867}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,9 +44,20 @@ Global
 		{4613BB40-21AF-41EA-B427-CB27497E01FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4613BB40-21AF-41EA-B427-CB27497E01FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4613BB40-21AF-41EA-B427-CB27497E01FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84280993-94CF-48F8-B7C2-8B3E1AD8D867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84280993-94CF-48F8-B7C2-8B3E1AD8D867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84280993-94CF-48F8-B7C2-8B3E1AD8D867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84280993-94CF-48F8-B7C2-8B3E1AD8D867}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{58D097B0-BE98-4C86-AB2A-4153C6838134} = {DD184619-EC06-41AC-9408-3B08B451155C}
+		{AD81E5C4-6FAB-4713-A88D-01C621F232D1} = {DD184619-EC06-41AC-9408-3B08B451155C}
+		{024C7D2A-3E57-4CAF-9EFC-6AB82CEBDD47} = {DD184619-EC06-41AC-9408-3B08B451155C}
+		{4613BB40-21AF-41EA-B427-CB27497E01FC} = {EAAF33FA-5B12-4E1C-87B1-51AC38E91785}
+		{84280993-94CF-48F8-B7C2-8B3E1AD8D867} = {EAAF33FA-5B12-4E1C-87B1-51AC38E91785}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {910CE345-12EA-42A6-9AF8-74A7BA397E1A}

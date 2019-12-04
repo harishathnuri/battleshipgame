@@ -20,17 +20,20 @@ namespace Battle.API.Controllers
         private readonly IBoardRepo boardRepo;
         private readonly IBattleShipRepo battleShipRepo;
         private readonly IBlockRepo blockRepo;
+        private readonly IBattleShipService battleShipService;
         private readonly ILogger<BattleShipController> logger;
 
         public BattleShipController(
             IBoardRepo boardRepo,
             IBattleShipRepo battleShipRepo,
             IBlockRepo blockRepo,
+            IBattleShipService battleShipService,
             ILogger<BattleShipController> logger)
         {
             this.boardRepo = boardRepo;
             this.battleShipRepo = battleShipRepo;
             this.blockRepo = blockRepo;
+            this.battleShipService = battleShipService;
             this.logger = logger;
         }
 
@@ -69,28 +72,14 @@ namespace Battle.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(ValidateModelState))]
-        public IActionResult ApiBattleShipPost(int boardId,
-            BattleShipToBeCreated battleShipToBeCreated)
+        public ObjectResult ApiBattleShipPost(int boardId,
+            BattleShipToBeCreatedRequest battleShipToBeCreatedRequest)
         {
             logger.LogDebug("Start - Request for new battle ship");
 
-            IActionResult result = null;
+            ObjectResult result = null;
 
-            var blocksToAssociate = battleShipToBeCreated.BlockNumbers
-                .Select(n => new BattleShipBlock
-                {
-                    Block = new Block
-                    {
-                        BoardId = boardId,
-                        Number = n
-                    }
-                })
-                .ToList();
-            var battleShip = new BattleShip()
-            {
-                BoardId = boardId,
-                BattleShipBlocks = blocksToAssociate
-            };
+            var battleShip = BattleShipFactory(boardId, battleShipToBeCreatedRequest);
 
             // prep board to ask question
             var board = boardRepo.Get(boardId);
@@ -100,8 +89,8 @@ namespace Battle.API.Controllers
             // if can be associated save the battle ship to database
             if (battleShipAssociation.Status == true)
             {
-                var battleShipFromRepo = SaveBattleShip(boardId, blocksToAssociate);
-                battleShipFromRepo = battleShipRepo.Get(boardId, battleShipFromRepo.Id);
+                var battleShipFromRepo = battleShipService
+                    .SaveBattleShip(boardId, battleShip.BattleShipBlocks);
                 var successResponse = ResponseFactory.Create(battleShipFromRepo);
 
                 result = CreatedAtAction(nameof(ApiBattleShipGet),
@@ -118,34 +107,25 @@ namespace Battle.API.Controllers
             return result;
         }
 
-        private BattleShip SaveBattleShip(
-            int boardId, List<BattleShipBlock> blocksToAssociate)
+        private BattleShip BattleShipFactory(
+            int boardId, BattleShipToBeCreatedRequest battleShipToBeCreatedRequest)
         {
-            // construct battle ship to save in repo
-            var battleShipToSave = new BattleShip
+            var blocksToAssociate = battleShipToBeCreatedRequest.BlockNumbers
+                            .Select(n => new BattleShipBlock
+                            {
+                                Block = new Block
+                                {
+                                    BoardId = boardId,
+                                    Number = n
+                                }
+                            })
+                            .ToList();
+            var battleShip = new BattleShip()
             {
-                BoardId = boardId
+                BoardId = boardId,
+                BattleShipBlocks = blocksToAssociate
             };
-            var battleShipFromRepo = battleShipRepo.Add(battleShipToSave);
-            // retrieve battle ship Id
-            var battleshipId = battleShipFromRepo.Id;
-            // construct battle ship blocks
-            // retrieve blockIds for given block numbers on board
-            var blocksFromRepo = blockRepo.ListByBoard(boardId);
-            blocksToAssociate = blocksFromRepo.Join(
-                blocksToAssociate,
-                br => br.Number,
-                bta => bta.Block.Number,
-                (br, bta) =>
-                     new BattleShipBlock
-                     {
-                         BattleShipId = battleshipId,
-                         BlockId = br.Id
-                     })
-                .ToList();
-            var blocksAssociatedFromRepo =
-                blockRepo.AssociateBlockToBattleShip(blocksToAssociate);
-            return battleShipFromRepo;
+            return battleShip;
         }
     }
 }

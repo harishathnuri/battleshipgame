@@ -30,7 +30,10 @@ namespace Battle.API.Filters
             {
                 isBoardIdAvailable = context.ActionArguments.TryGetValue("Id", out object primaryKey)
                         && primaryKey is int;
-                boardId = (int)primaryKey;
+                if (primaryKey != null)
+                {
+                    boardId = (int)primaryKey;
+                }
             }
             if (isBoardIdAvailable)
             {

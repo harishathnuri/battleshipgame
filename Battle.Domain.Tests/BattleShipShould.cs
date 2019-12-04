@@ -1,9 +1,8 @@
-using Battle.Domain;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Battle.Tests
+namespace Battle.Domain.Tests
 {
     public class BattleShipShould
     {

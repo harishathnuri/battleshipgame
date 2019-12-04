@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Battle.API.ViewModel
 {
-    public class BattleShipToBeCreated : IValidatableObject
+    public class BattleShipToBeCreatedRequest : IValidatableObject
     {
         public List<int> BlockNumbers { get; set; }
 

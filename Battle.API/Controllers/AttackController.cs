@@ -46,7 +46,7 @@ namespace Battle.API.Controllers
 
         [HttpPost]
         [TypeFilter(typeof(ValidateModelState))]
-        public IActionResult ApiAttackPost(int boardId, BlockToAttack blockToAttack)
+        public ObjectResult ApiAttackPost(int boardId, BlockToAttackRequest blockToAttack)
         {
             var requestlogger = string.Format(
                     "Start - Request for attack on board {0} and block number {1}",
@@ -54,7 +54,7 @@ namespace Battle.API.Controllers
                     blockToAttack.Number);
             logger.LogDebug($"Start - {requestlogger}");
 
-            IActionResult result = null;
+            ObjectResult result = null;
 
             var block = new Block
             {

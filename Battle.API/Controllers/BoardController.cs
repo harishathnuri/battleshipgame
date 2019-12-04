@@ -64,23 +64,21 @@ namespace Battle.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ApiBoardPost()
+        public ObjectResult ApiBoardPost()
         {
             logger.LogDebug("Start - Request for new board");
 
             var board = new Board();
             var boardFromRepo = boardRepo.Create(board);
-            var blocks = new List<Block>();
-            for (int i = boardFromRepo.FirstBlockNumber;
-                i <= boardFromRepo.LastBlockNumber; i++)
-            {
-                var block = new Block 
+            var blocks = Enumerable.Range(
+                boardFromRepo.FirstBlockNumber,
+                boardFromRepo.LastBlockNumber)
+                .Select(n => new Block
                 {
                     BoardId = boardFromRepo.Id,
-                    Number = i
-                };
-                blocks.Add(block);
-            }
+                    Number = n
+                })
+                .ToList();
             var blocksFromRepo = blockRepo.CreateBlocksForBoard(blocks);
 
             boardFromRepo = boardRepo.Get(boardFromRepo.Id);
@@ -90,6 +88,6 @@ namespace Battle.API.Controllers
 
             return CreatedAtAction(nameof(ApiBoardGet),
                 new { id = boardFromRepo.Id }, response);
-        }        
+        }
     }
 }
