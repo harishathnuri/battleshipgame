@@ -1,6 +1,6 @@
 using Battle.API.Extensions;
-using Battle.Repository;
-using Battle.Repository.Extensions;
+using Battle.Infrastructure;
+using Battle.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +31,7 @@ namespace Battle.API
                             //.UseSqlServer(Configuration.GetConnectionString("BattleAppConnection"))
                             .UseInMemoryDatabase(databaseName: "BattleAppData")
                             );
-            services.AddBattleAppService();
+            services.AddBattleInfrastructureService();
             services.AddControllers()
                 .AddNewtonsoftJson(
                     options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
@@ -39,8 +39,8 @@ namespace Battle.API
                 options =>
                 {
                     options.SwaggerDoc(Configuration["SwaggerGenOptions:name"],
-                        new OpenApiInfo() 
-                        { 
+                        new OpenApiInfo()
+                        {
                             Title = Configuration["SwaggerGenOptions:title"],
                             Version = Configuration["SwaggerGenOptions:version"]
                         });

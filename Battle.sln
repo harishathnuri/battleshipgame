@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.Domain", "Battle.Domain\Battle.Domain.csproj", "{58D097B0-BE98-4C86-AB2A-4153C6838134}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.Repository", "Battle.Repository\Battle.Repository.csproj", "{AD81E5C4-6FAB-4713-A88D-01C621F232D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.Infrastructure", "Battle.Infrastructure\Battle.Infrastructure.csproj", "{AD81E5C4-6FAB-4713-A88D-01C621F232D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battle.API", "Battle.API\Battle.API.csproj", "{024C7D2A-3E57-4CAF-9EFC-6AB82CEBDD47}"
 EndProject

@@ -2,7 +2,7 @@
 using Battle.API.Filters;
 using Battle.API.ViewModel;
 using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
@@ -16,17 +16,17 @@ namespace Battle.API.Controllers
     [TypeFilter(typeof(ValidateAttackId))]
     public class AttackController : Controller
     {
-        private readonly IBoardRepo boardRepo;
-        private readonly IAttackRepo attackRepo;
+        private readonly IBoardRepository boardRepository;
+        private readonly IAttackRepository attackRepository;
         private readonly ILogger<AttackController> logger;
 
         public AttackController(
-            IBoardRepo boardRepo,
-            IAttackRepo attackRepo,
+            IBoardRepository boardRepository,
+            IAttackRepository attackRepository,
             ILogger<AttackController> logger)
         {
-            this.boardRepo = boardRepo;
-            this.attackRepo = attackRepo;
+            this.boardRepository = boardRepository;
+            this.attackRepository = attackRepository;
             this.logger = logger;
         }
 
@@ -36,7 +36,7 @@ namespace Battle.API.Controllers
         {
             logger.LogDebug($"Start - Request for attack {id}");
 
-            var attack = attackRepo.Get(boardId, id);
+            var attack = attackRepository.Get(boardId, id);
             var response = ResponseFactory.Create(attack);
 
             logger.LogDebug($"End - Request for attack {id}");
@@ -62,7 +62,7 @@ namespace Battle.API.Controllers
                 Number = blockToAttack.Number
             };
             // prep board to ask question
-            var board = boardRepo.Get(boardId);
+            var board = boardRepository.Get(boardId);
             // ask board whether given block can be attacked
             var attackResult = board.CanAttackBlock(block);
 
@@ -75,7 +75,7 @@ namespace Battle.API.Controllers
                 {
                     BlockId = blockUnderAttack.Id
                 };
-                attackRepo.Create(attack);
+                attackRepository.Create(attack);
                 result = CreatedAtAction(nameof(ApiAttackGet),
                     new { boardId, id = attack.Id }, attackResult);
             }

@@ -1,7 +1,7 @@
 ﻿using Battle.API.Controllers;
 using Battle.API.ViewModel;
 using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +11,7 @@ namespace Battle.API.Tests
 {
     public class AttackControllerShould
     {
-        private IBoardRepo fakeBoardRepo;
+        private IBoardRepository fakeBoardRepo;
         private ILogger<AttackController> fakeLogger;
 
         [SetUp]
@@ -19,7 +19,7 @@ namespace Battle.API.Tests
         {
             var fakeBoard = Helper.FakeBoardFactory();
 
-            var moqBoardRepo = new Mock<IBoardRepo>();
+            var moqBoardRepo = new Mock<IBoardRepository>();
             moqBoardRepo.Setup(br => br.Get(It.IsAny<int>())).Returns(fakeBoard);
             fakeBoardRepo = moqBoardRepo.Object;
 
@@ -35,7 +35,7 @@ namespace Battle.API.Tests
             {
                 Number = 1
             };
-            var moqAttackRepo = new Mock<IAttackRepo>();
+            var moqAttackRepo = new Mock<IAttackRepository>();
             moqAttackRepo.Setup(repo => repo.Create(It.IsAny<Attack>()));
             var fakeAttackRepo = moqAttackRepo.Object;
             var controller = new AttackController(
