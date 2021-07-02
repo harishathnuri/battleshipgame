@@ -35,4 +35,5 @@ steps:
       **\Battle*test*.dll
       !**\*TestAdapter.dll
       !**\obj\**
+      !**\bin\**\ref\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
