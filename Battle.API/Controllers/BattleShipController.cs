@@ -2,7 +2,7 @@
 using Battle.API.Filters;
 using Battle.API.ViewModel;
 using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -17,16 +17,16 @@ namespace Battle.API.Controllers
     [TypeFilter(typeof(ValidateBattleShipId))]
     public class BattleShipController : Controller
     {
-        private readonly IBoardRepo boardRepo;
-        private readonly IBattleShipRepo battleShipRepo;
-        private readonly IBlockRepo blockRepo;
+        private readonly IBoardRepository boardRepo;
+        private readonly IBattleShipRepository battleShipRepo;
+        private readonly IBlockRepository blockRepo;
         private readonly IBattleShipService battleShipService;
         private readonly ILogger<BattleShipController> logger;
 
         public BattleShipController(
-            IBoardRepo boardRepo,
-            IBattleShipRepo battleShipRepo,
-            IBlockRepo blockRepo,
+            IBoardRepository boardRepo,
+            IBattleShipRepository battleShipRepo,
+            IBlockRepository blockRepo,
             IBattleShipService battleShipService,
             ILogger<BattleShipController> logger)
         {

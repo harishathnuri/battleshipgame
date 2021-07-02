@@ -64,7 +64,7 @@ namespace Battle.Domain
                 attackResult.Status = true;
                 attackResult.Message = "Success...";
             }
-            else 
+            else
             {
                 attackResult.Status = false;
                 attackResult.Message = "Failed...";

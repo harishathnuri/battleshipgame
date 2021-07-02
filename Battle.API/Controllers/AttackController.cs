@@ -1,11 +1,10 @@
 ﻿using Battle.API.Factories;
 using Battle.API.Filters;
 using Battle.API.ViewModel;
-using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Application.Commands;
+using Battle.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace Battle.API.Controllers
 {
@@ -16,17 +15,17 @@ namespace Battle.API.Controllers
     [TypeFilter(typeof(ValidateAttackId))]
     public class AttackController : Controller
     {
-        private readonly IBoardRepo boardRepo;
-        private readonly IAttackRepo attackRepo;
+        private readonly IQuery<RetrieveAttackRequest, RetrieveAttackResponse> retrieveAttackQuery;
+        private readonly ICommand<CreateAttackRequest, CreateAttackResponse> createAttackCommand;
         private readonly ILogger<AttackController> logger;
 
         public AttackController(
-            IBoardRepo boardRepo,
-            IAttackRepo attackRepo,
+            IQuery<RetrieveAttackRequest, RetrieveAttackResponse> retrieveAttackQuery,
+            ICommand<CreateAttackRequest, CreateAttackResponse> createAttackCommand,
             ILogger<AttackController> logger)
         {
-            this.boardRepo = boardRepo;
-            this.attackRepo = attackRepo;
+            this.retrieveAttackQuery = retrieveAttackQuery;
+            this.createAttackCommand = createAttackCommand;
             this.logger = logger;
         }
 
@@ -36,8 +35,13 @@ namespace Battle.API.Controllers
         {
             logger.LogDebug($"Start - Request for attack {id}");
 
-            var attack = attackRepo.Get(boardId, id);
-            var response = ResponseFactory.Create(attack);
+            var retrieveAttackRequest = new RetrieveAttackRequest()
+            {
+                BoardId = boardId,
+                AttackId = id
+            };
+            var retrieveAttackReponse = retrieveAttackQuery.Execute(retrieveAttackRequest);
+            var response = ResponseFactory.Create(retrieveAttackReponse.Attack);
 
             logger.LogDebug($"End - Request for attack {id}");
 
@@ -54,35 +58,28 @@ namespace Battle.API.Controllers
                     blockToAttack.Number);
             logger.LogDebug($"Start - {requestlogger}");
 
-            ObjectResult result = null;
-
-            var block = new Block
+            var createAttackRequest = new CreateAttackRequest()
             {
                 BoardId = boardId,
-                Number = blockToAttack.Number
+                BlockNumber = blockToAttack.Number
             };
-            // prep board to ask question
-            var board = boardRepo.Get(boardId);
-            // ask board whether given block can be attacked
-            var attackResult = board.CanAttackBlock(block);
+            var createAttackResponse = createAttackCommand.Execute(createAttackRequest);
 
-            // if attack is successful save the entity in database
-            if (attackResult.Status == true)
+            ObjectResult result = null;
+            if (createAttackResponse.AttackResult.Status == true)
             {
-                var blockUnderAttack =
-                    board.Blocks.First(b => b.Number == blockToAttack.Number);
-                var attack = new Attack
-                {
-                    BlockId = blockUnderAttack.Id
-                };
-                attackRepo.Create(attack);
                 result = CreatedAtAction(nameof(ApiAttackGet),
-                    new { boardId, id = attack.Id }, attackResult);
+                    new
+                    {
+                        boardId,
+                        id = createAttackResponse.AttackId
+                    },
+                    createAttackResponse.AttackResult);
             }
             else
             {
                 // 404
-                result = new BadRequestObjectResult(attackResult);
+                result = new BadRequestObjectResult(createAttackResponse.AttackResult);
             }
 
             logger.LogDebug($"End - {requestlogger}");

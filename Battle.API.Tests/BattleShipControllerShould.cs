@@ -1,19 +1,18 @@
 using Battle.API.Controllers;
 using Battle.API.ViewModel;
 using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 
 namespace Battle.API.Tests
 {
     public class BattleShipControllerShould
     {
-        private IBoardRepo fakeBoardRepo;
+        private IBoardRepository fakeBoardRepo;
         private ILogger<BattleShipController> fakeLogger;
 
         [SetUp]
@@ -21,7 +20,7 @@ namespace Battle.API.Tests
         {
             var fakeBoard = Helper.FakeBoardFactory();
 
-            var moqBoardRepo = new Mock<IBoardRepo>();
+            var moqBoardRepo = new Mock<IBoardRepository>();
             moqBoardRepo.Setup(br => br.Get(It.IsAny<int>())).Returns(fakeBoard);
             fakeBoardRepo = moqBoardRepo.Object;
 
@@ -46,8 +45,8 @@ namespace Battle.API.Tests
                 .Returns(expectedBattleShip);
 
             var fakeBattleShipService = moqBattleShipService.Object;
-            var fakeBattleShipRepo = new Mock<IBattleShipRepo>().Object;
-            var fakeBlockRepo = new Mock<IBlockRepo>().Object;
+            var fakeBattleShipRepo = new Mock<IBattleShipRepository>().Object;
+            var fakeBlockRepo = new Mock<IBlockRepository>().Object;
             //sut
             var sut = new BattleShipController(
                 fakeBoardRepo, fakeBattleShipRepo,

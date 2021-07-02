@@ -1,6 +1,6 @@
 ﻿using Battle.API.Controllers;
 using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -25,13 +25,13 @@ namespace Battle.API.Tests
         {
             //arrange
             var fakeBoard = Helper.FakeBoardFactory();
-            var moqBoardRepo = new Mock<IBoardRepo>();
+            var moqBoardRepo = new Mock<IBoardRepository>();
             moqBoardRepo.Setup(br => br.Get(It.IsAny<int>())).Returns(fakeBoard);
             moqBoardRepo.Setup(br => br.Create(It.IsAny<Board>())).Returns(fakeBoard);
             var fakeBoardRepo = moqBoardRepo.Object;
 
             var fakeBlocks = Helper.FakeBlocksFactory();
-            var moqBlockRepo = new Mock<IBlockRepo>();
+            var moqBlockRepo = new Mock<IBlockRepository>();
             moqBlockRepo.Setup(
                 br => br.CreateBlocksForBoard(It.IsAny<List<Block>>()))
                 .Returns(fakeBlocks);

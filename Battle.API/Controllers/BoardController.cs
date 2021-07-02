@@ -2,7 +2,7 @@
 using Battle.API.Filters;
 using Battle.API.ViewModel;
 using Battle.Domain;
-using Battle.Repository.Interfaces;
+using Battle.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -15,13 +15,13 @@ namespace Battle.API.Controllers
     [ApiExceptionHandler]
     public class BoardController : Controller
     {
-        private readonly IBoardRepo boardRepo;
-        private readonly IBlockRepo blockRepo;
+        private readonly IBoardRepository boardRepo;
+        private readonly IBlockRepository blockRepo;
         private readonly ILogger<BoardController> logger;
 
         public BoardController(
-            IBoardRepo boardRepo,
-            IBlockRepo blockRepo,
+            IBoardRepository boardRepo,
+            IBlockRepository blockRepo,
             ILogger<BoardController> logger)
         {
             this.boardRepo = boardRepo;

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Battle.Domain
 {
@@ -25,7 +23,7 @@ namespace Battle.Domain
                     validationResult.Messages.Add("Blocks are not contiguous");
                 }
             }
-            else 
+            else
             {
                 validationResult.Status = false;
                 validationResult.Messages.Add("Battle ship should occupy atleast one block");

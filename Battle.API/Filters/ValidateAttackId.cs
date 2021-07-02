@@ -1,4 +1,4 @@
-﻿using Battle.Repository.Interfaces;
+﻿using Battle.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -7,10 +7,10 @@ namespace Battle.API.Filters
 {
     public class ValidateAttackId : ActionFilterAttribute
     {
-        private readonly IAttackRepo attackRepo;
+        private readonly IAttackRepository attackRepo;
         private readonly ILogger<ValidateAttackId> logger;
 
-        public ValidateAttackId(IAttackRepo attackRepo, ILogger<ValidateAttackId> logger)
+        public ValidateAttackId(IAttackRepository attackRepo, ILogger<ValidateAttackId> logger)
         {
             this.attackRepo = attackRepo;
             this.logger = logger;

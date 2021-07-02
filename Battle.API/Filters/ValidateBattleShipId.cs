@@ -1,4 +1,4 @@
-﻿using Battle.Repository.Interfaces;
+﻿using Battle.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -7,10 +7,10 @@ namespace Battle.API.Filters
 {
     public class ValidateBattleShipId : ActionFilterAttribute
     {
-        private readonly IBattleShipRepo battleShipRepo;
+        private readonly IBattleShipRepository battleShipRepo;
         private readonly ILogger<ValidateBoardId> logger;
 
-        public ValidateBattleShipId(IBattleShipRepo battleShipRepo, ILogger<ValidateBoardId> logger)
+        public ValidateBattleShipId(IBattleShipRepository battleShipRepo, ILogger<ValidateBoardId> logger)
         {
             this.battleShipRepo = battleShipRepo;
             this.logger = logger;

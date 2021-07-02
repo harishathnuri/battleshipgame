@@ -1,4 +1,4 @@
-﻿using Battle.Repository.Interfaces;
+﻿using Battle.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -7,10 +7,10 @@ namespace Battle.API.Filters
 {
     public class ValidateBoardId : ActionFilterAttribute
     {
-        private readonly IBoardRepo boardRepo;
+        private readonly IBoardRepository boardRepo;
         private readonly ILogger<ValidateBoardId> logger;
 
-        public ValidateBoardId(IBoardRepo boardRepo, ILogger<ValidateBoardId> logger)
+        public ValidateBoardId(IBoardRepository boardRepo, ILogger<ValidateBoardId> logger)
         {
             this.boardRepo = boardRepo;
             this.logger = logger;
