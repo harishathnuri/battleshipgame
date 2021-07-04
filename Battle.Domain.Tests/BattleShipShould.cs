@@ -12,7 +12,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCaseSource("AreContiguousBlockTestCases")]
-        public string ReturnInValidWhenBattleShipBlocksAreSpreadAcrossTwoRowsOrColumns(
+        public string Validate_Should_Return_InValid_When_BattleShip_Blocks_Are_Spread_Across_TwoRowsOrColumns(
             List<BattleShipBlock> battleShipBlocks)
         {
             var sut = new BattleShip
@@ -25,8 +25,36 @@ namespace Battle.Domain.Tests
             return result.Messages.First();
         }
 
+        [TestCase]
+        public void Validate_Should_Return_InValid_When_BattleShip_WithNoBlocks()
+        {
+            var sut = new BattleShip
+            {
+                BattleShipBlocks = new List<BattleShipBlock>()
+            };
+
+            var result = sut.Validate();
+
+            //assert
+            Assert.AreEqual(result.Messages.First(), "Battle ship should occupy atleast one block");
+        }
+
+        [TestCase]
+        public void Validate_Should_Return_InValid_When_BattleShip_WithNullInput()
+        {
+            var sut = new BattleShip
+            {
+                BattleShipBlocks = null
+            };
+
+            var result = sut.Validate();
+
+            //assert
+            Assert.AreEqual(result.Messages.First(), "Battle ship should occupy atleast one block");
+        }
+
         [TestCaseSource("OverlappingBlockTestCases")]
-        public List<int> ReturnInOverlappingBlocksWhenBattleShip(
+        public List<int> Validate_Should_Return_InVlaid_Overlapping_Blocks_In_BattleShip(
             List<BattleShipBlock> battleShipBlocks, List<Block> blocks)
         {
             var sut = new BattleShip
@@ -70,6 +98,8 @@ namespace Battle.Domain.Tests
 
                 var expectedResult2 = new List<int> { 41, 51 };
 
+                var expectedResult3 = new List<int> { };
+
                 yield return new TestCaseData(Enumerable.Range(11, 5)
                     .Select(n => new BattleShipBlock { Block = new Block { Number = n } })
                     .ToList(), inputBlocks1).Returns(expectedResult1);
@@ -77,6 +107,10 @@ namespace Battle.Domain.Tests
                 yield return new TestCaseData(new List<int> { 21, 31, 41, 51 }
                     .Select(n => new BattleShipBlock { Block = new Block { Number = n } })
                     .ToList(), inputBlocks2).Returns(expectedResult2);
+
+                yield return new TestCaseData(new List<int> { 21, 31, 41, 51 }
+                    .Select(n => new BattleShipBlock { Block = new Block { Number = n } })
+                    .ToList(), null).Returns(expectedResult3);
             }
         }
     }

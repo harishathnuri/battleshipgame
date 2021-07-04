@@ -8,6 +8,10 @@ namespace Battle.API.Tests
     {
         public const int FAKE_BOARD_ID = 1;
 
+        public const int FAKE_BLOCK_ID = 1;
+
+        public const int FAKE_BLOCK_NUMBER = 1;
+
         public static Board FakeBoardFactory()
         {
             return new Board()

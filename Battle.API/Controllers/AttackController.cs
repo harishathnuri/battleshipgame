@@ -37,6 +37,7 @@ namespace Battle.API.Controllers
             logger.LogDebug($"Start - Request for attack {id}");
 
             var attack = attackRepository.Get(boardId, id);
+
             var response = ResponseFactory.Create(attack);
 
             logger.LogDebug($"End - Request for attack {id}");
@@ -81,7 +82,7 @@ namespace Battle.API.Controllers
             }
             else
             {
-                // 404
+                // 400
                 result = new BadRequestObjectResult(attackResult);
             }
 

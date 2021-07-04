@@ -19,10 +19,10 @@ Currently the app has following operations
 
 Following are the cURL request
 * To create board
-	curl -X POST "https://battleapi20191125055931.azurewebsites.net/api/Board" -H "accept: */*"
+	curl -X POST "https://localhost:5001/api/Board" -H "accept: */*"
 * To add battleship to board
-	curl -X POST "https://battleapi20191125055931.azurewebsites.net/api/board/1/BattleShip" -H "accept: */*" -H "Content-Type: application/json-patch+json" -d "{\"blockNumbers\":[10,20,30]}"
+	curl -X POST "https://localhost:5001/api/board/1/BattleShip" -H "accept: */*" -H "Content-Type: application/json-patch+json" -d "{\"blockNumbers\":[10,20,30]}"
 * To attack a block
-	curl -X POST "https://battleapi20191125055931.azurewebsites.net/api/board/1/Attack" -H "accept: */*" -H "Content-Type: application/json-patch+json" -d "{\"number\":10}"
+	curl -X POST "https://localhost:5001/api/board/1/Attack" -H "accept: */*" -H "Content-Type: application/json-patch+json" -d "{\"number\":10}"
 
 

@@ -25,12 +25,20 @@ namespace Battle.Domain
         {
             var validationResult = new ValidationResult();
 
+            if (battleShip == null)
+            {
+                validationResult.Status = false;
+                validationResult.Messages.AddRange(new List<string> { "Please add valid battleship" });
+                return validationResult;
+            }
+
             var battleShipValidationResult = battleShip.Validate();
 
             if (battleShipValidationResult.Status == false)
             {
                 validationResult.Status = false;
                 validationResult.Messages.AddRange(battleShipValidationResult.Messages);
+                return validationResult;
             }
 
             var newBattleShipBlocks = battleShip.BattleShipBlocks.Select(b => b.Block).ToList();
