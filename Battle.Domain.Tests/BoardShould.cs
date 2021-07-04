@@ -6,14 +6,8 @@ namespace Battle.Domain.Tests
 {
     public class BoardShould
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
-
         [TestCase]
-        public void CanAddBattleShip_Should_Return_False_For_Null_BattleShip()
+        public void CanAddBattleShipShouldReturnFalseForNullBattleShip()
         {
             var sut = new Board()
             {
@@ -27,7 +21,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCase]
-        public void CanAddBattleShip_Should_Return_False_For_Invalid_BattleShip()
+        public void CanAddBattleShipShouldReturnFalseForInvalidBattleShip()
         {
             var sut = new Board()
             {
@@ -41,7 +35,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCase]
-        public void CanAddBattleShip_Should_Return_False_For_Overlapping_BattleShip()
+        public void CanAddBattleShipShouldReturnFalseForOverlappingBattleShip()
         {
             var sut = new Board()
             {
@@ -71,7 +65,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCase]
-        public void CanAttackBlocks_Should_Return_True_For_Occupied_BattleShip()
+        public void CanAttackBlocksShouldReturnTrueForOccupiedBattleShip()
         {
             var sut = new Board()
             {
@@ -98,7 +92,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCase]
-        public void CanAttackBlocks_Should_Return_True_For_Empty_BattleShip()
+        public void CanAttackBlocksShouldReturnTrueForEmptyBattleShip()
         {
             var sut = new Board()
             {

@@ -1,8 +1,10 @@
 ﻿using Battle.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Battle.Infrastructure.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtensions
     {
         public static void AddBattleInfrastructureService(this IServiceCollection services)

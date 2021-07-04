@@ -1,8 +1,10 @@
 ﻿using Battle.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Battle.Infrastructure
 {
+    [ExcludeFromCodeCoverage]
     public class BattleAppContext : DbContext
     {
         public BattleAppContext(DbContextOptions<BattleAppContext> options)

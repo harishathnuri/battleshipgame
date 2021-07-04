@@ -6,13 +6,8 @@ namespace Battle.Domain.Tests
 {
     public class BattleShipShould
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [TestCaseSource("AreContiguousBlockTestCases")]
-        public string Validate_Should_Return_InValid_When_BattleShip_Blocks_Are_Spread_Across_TwoRowsOrColumns(
+        public string ValidateShouldReturnInValidWhenBattleShipBlocksAreSpreadAcrossTwoRowsOrColumns(
             List<BattleShipBlock> battleShipBlocks)
         {
             var sut = new BattleShip
@@ -26,7 +21,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCase]
-        public void Validate_Should_Return_InValid_When_BattleShip_WithNoBlocks()
+        public void ValidateShouldReturnInValidWhenBattleShipWithNoBlocks()
         {
             var sut = new BattleShip
             {
@@ -40,7 +35,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCase]
-        public void Validate_Should_Return_InValid_When_BattleShip_WithNullInput()
+        public void ValidateShouldReturnInValidWhenBattleShipWithNullInput()
         {
             var sut = new BattleShip
             {
@@ -54,7 +49,7 @@ namespace Battle.Domain.Tests
         }
 
         [TestCaseSource("OverlappingBlockTestCases")]
-        public List<int> Validate_Should_Return_InVlaid_Overlapping_Blocks_In_BattleShip(
+        public List<int> ValidateShouldReturnInVlaidOverlappingBlocksInBattleShip(
             List<BattleShipBlock> battleShipBlocks, List<Block> blocks)
         {
             var sut = new BattleShip
